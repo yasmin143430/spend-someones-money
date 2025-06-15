@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spend Someone's Money</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; text-align: center; }
+    .money { font-size: 30px; margin: 20px; }
+    .item { background: white; border: 1px solid #ccc; border-radius: 10px;
+      padding: 15px; margin: 10px auto; width: 300px; }
+    .item img { width: 100px; height: 100px; object-fit: contain; }
+    button { margin-top: 10px; padding: 10px 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>Spend Someone's Money</h1>
+  <div class="money" id="money">$100,000,000,000</div>
+  <div id="items"></div>
+
+  <script>
+    let money = 100_000_000_000;
+
+    const items = [
+      { name: "Netflix Annual Plan", price: 180, img: "https://img.icons8.com/ios-filled/100/netflix.png" },
+      { name: "Amazon Prime Annual", price: 140, img: "https://img.icons8.com/ios-filled/100/amazon-prime-video.png" },
+      { name: "Disney+ Annual", price: 100, img: "https://img.icons8.com/ios-filled/100/disney-plus.png" },
+      { name: "F1 Paddock Pass", price: 5000, img: "https://img.icons8.com/ios-filled/100/race-flag.png" },
+      { name: "F1 VIP Race Ticket", price: 8000, img: "https://img.icons8.com/ios-filled/100/race-start.png" },
+      { name: "F1 Merchandise Set", price: 500, img: "https://img.icons8.com/ios-filled/100/trophy.png" },
+      { name: "BT21 Dolls Collection", price: 300, img: "https://img.icons8.com/ios-filled/100/robot-2.png" },
+      { name: "BTS VIP Concert Ticket", price: 1500, img: "https://img.icons8.com/ios-filled/100/music.png" },
+      { name: "Xbox Game Pass", price: 120, img: "https://img.icons8.com/ios-filled/100/xbox.png" },
+      { name: "PlayStation Now Pass", price: 120, img: "https://img.icons8.com/ios-filled/100/play-button-circled.png" },
+      { name: "All Steam Games", price: 10000, img: "https://img.icons8.com/ios-filled/100/steam.png" },
+      { name: "EA Sports Games Bundle", price: 8000, img: "https://img.icons8.com/ios-filled/100/controller.png" },
+      { name: "PlayStation 5", price: 500, img: "https://img.icons8.com/ios-filled/100/playstation.png" },
+      { name: "Handheld Xbox", price: 300, img: "https://img.icons8.com/ios-filled/100/xbox-controller.png" },
+      { name: "Formula 1 Car", price: 10_000_000, img: "https://img.icons8.com/ios-filled/100/race-car.png" },
+      { name: "Wardrobe Makeover", price: 5000, img: "https://img.icons8.com/ios-filled/100/t-shirt.png" },
+      { name: "Sponsor F1 Team", price: 50_000_000, img: "https://img.icons8.com/ios-filled/100/sponsor.png" },
+      { name: "Cinema Tickets for 1 Year", price: 1000, img: "https://img.icons8.com/ios-filled/100/popcorn.png" },
+      { name: "All-Star Shoe Collection", price: 2000, img: "https://img.icons8.com/ios-filled/100/shoes.png" },
+      { name: "Clothing Brand Buyout", price: 1_000_000, img: "https://img.icons8.com/ios-filled/100/store.png" },
+      { name: "Luxury Home Bar", price: 15_000, img: "https://img.icons8.com/ios-filled/100/bar.png" },
+      { name: "Gym Membership (1 Year)", price: 600, img: "https://img.icons8.com/ios-filled/100/dumbbell.png" },
+      { name: "Online Course", price: 200, img: "https://img.icons8.com/ios-filled/100/graduation-cap.png" },
+      { name: "Private Junina Party", price: 10_000, img: "https://img.icons8.com/ios-filled/100/party--v1.png" },
+      { name: "Farm", price: 500_000, img: "https://img.icons8.com/ios-filled/100/farm.png" },
+      { name: "Huge Plantation Land", price: 1_000_000, img: "https://img.icons8.com/ios-filled/100/trees.png" },
+      { name: "Ferrari", price: 300_000, img: "https://img.icons8.com/ios-filled/100/ferrari.png" },
+      { name: "100 Books", price: 2000, img: "https://img.icons8.com/ios-filled/100/books.png" },
+      { name: "Plastic Surgery", price: 20_000, img: "https://img.icons8.com/ios-filled/100/surgery.png" },
+      { name: "Tattoo", price: 500, img: "https://img.icons8.com/ios-filled/100/tattoo.png" },
+      { name: "Piercing", price: 100, img: "https://img.icons8.com/ios-filled/100/piercing.png" },
+      { name: "High-End Gaming PC", price: 4000, img: "https://img.icons8.com/ios-filled/100/keyboard.png" },
+      { name: "Wine Cellar", price: 15_000, img: "https://img.icons8.com/ios-filled/100/wine-cellar.png" },
+      { name: "Beach House", price: 2_000_000, img: "https://img.icons8.com/ios-filled/100/beach-house.png" },
+      { name: "In-Ground Pool", price: 30_000, img: "https://img.icons8.com/ios-filled/100/swimming-pool.png" },
+      { name: "Sport Bike", price: 3000, img: "https://img.icons8.com/ios-filled/100/bicycle.png" },
+      { name: "Printer", price: 200, img: "https://img.icons8.com/ios-filled/100/printer.png" },
+      { name: "Tablet", price: 500, img: "https://img.icons8.com/ios-filled/100/tablet.png" }
+    ];
+
+    const itemContainer = document.getElementById('items');
+    const moneyDisplay = document.getElementById('money');
+
+    items.forEach(item => {
+      item.quantity = 0;
+      const div = document.createElement('div');
+      div.className = "item";
+      div.innerHTML = `
+        <h2>${item.name}</h2>
+        <img src="${item.img}" alt="${item.name}" />
+        <p>Price: $${item.price.toLocaleString()}</p>
+        <p>Owned: <span id="${item.name.replace(/\s/g,'-')}-count">0</span></p>
+        <button onclick="buy('${item.name.replace(/\s/g,'-')}')">Buy</button>
+      `;
+      itemContainer.appendChild(div);
+      item.idSafe = item.name.replace(/\s/g,'-');
+    });
+
+    function buy(idSafe) {
+      const item = items.find(i => i.idSafe === idSafe);
+      if (money >= item.price) {
+        money -= item.price;
+        item.quantity++;
+        document.getElementById(`${idSafe}-count`).innerText = item.quantity;
+        moneyDisplay.innerText = `$${money.toLocaleString()}`;
+      } else {
+        alert("Not enough money!");
+      }
+    }
+  </script>
+</body>
+</html>
